@@ -3,58 +3,128 @@
     "title": "Your Name — Personal Site"
   },
   "hero": {
-    "eyebrow": "[Your Title — e.g. Doctoral Researcher, Field]",
-    "name": "Your Name",
-    "role": "[One sentence: what you work on and why it matters — the pitch you'd give in an elevator.]",
+    "eyebrow": "PhD Candidate - Researcher - Mechanical Engineer",
+    "name": "Eyoel  Atnafe",
+    "role": "Versatile engineer and research. ",
     "bio": "[A short paragraph: your affiliation, what you're currently researching or building, and one detail that makes you memorable. Two to four sentences is plenty.]",
-    "email": "you@example.com",
+    "email": "eyoel.atnafe@gmail.com",
     "links": [
-      { "label": "Google Scholar", "url": "#" },
-      { "label": "GitHub", "url": "#" },
-      { "label": "LinkedIn", "url": "#" }
+      {
+        "label": "Google Scholar",
+        "url": "#"
+      },
+      {
+        "label": "GitHub",
+        "url": "#"
+      },
+      {
+        "label": "LinkedIn",
+        "url": "www.linkedin.com/in/eyoel-seifu-atnafe-437a111a0"
+      }
     ]
   },
   "research": [
     {
-      "year": "2026–",
-      "title": "[Project title]",
-      "description": "[One or two sentences on what the project does and why it's interesting.]",
-      "tags": ["tag one", "tag two", "tag three"],
+      "year": "2025-2026",
+      "title": "Artificial Intelligence approaches for Railway Dynamics",
+      "description": "Identifying artificial intellegence methodlogies for railway vehicle design in different stages of design stages to allow fast decision making. ",
+      "tags": [
+        "AI",
+        "Mechanics"
+      ],
       "link": "#"
     },
     {
-      "year": "2025",
-      "title": "[Project title]",
-      "description": "[Short description of this project.]",
-      "tags": ["tag one", "tag two"],
+      "year": "2024-25",
+      "title": "Data-Driven  Discrepancy Models",
+      "description": "Identifying missing model strucutre and correcting exisitng physics based models using data-drive models. ",
+      "tags": [
+        "SINDy",
+        "NARX",
+        "Bayesian",
+        "UQ"
+      ],
       "link": "#"
     }
   ],
   "academic": {
     "timeline": [
-      { "when": "[Year] — present", "what": "[Degree / role]", "where": "[Institution / lab]" },
-      { "when": "[Year] — [Year]", "what": "[Prior role]", "where": "[Organization]" },
-      { "when": "[Year]", "what": "[Degree]", "where": "[Institution]" }
+      {
+        "when": "[2025] - present ",
+        "what": "Phd Candidate",
+        "where": "FEMTO-ST, University of Marie and Louis Pastuer"
+      },
+      {
+        "when": "2022 - 2024",
+        "what": "Masters in Smart Mechanics",
+        "where": "University of Marie and Louis Pastuer"
+      },
+      {
+        "when": "2024",
+        "what": "Research Intern",
+        "where": "FEMTO-ST"
+      },
+      {
+        "when": "2015 - 2020",
+        "what": "Bachelor of Science in Mechanical Engineering",
+        "where": "Addis Ababa Institute of Technology"
+      }
     ],
     "publications": [
-      { "title": "[Paper title]", "meta": "[Authors] — [Journal / Venue], [Year]" },
-      { "title": "[Paper title]", "meta": "[Authors] — [Journal / Venue], [Year]" },
-      { "title": "[Paper title]", "meta": "[Authors] — [Journal / Venue], [Year]" }
+      {
+        "title": "[Paper title]",
+        "meta": "[Authors] — [Journal / Venue], [Year]"
+      },
+      {
+        "title": "[Paper title]",
+        "meta": "[Authors] — [Journal / Venue], [Year]"
+      },
+      {
+        "title": "[Paper title]",
+        "meta": "[Authors] — [Journal / Venue], [Year]"
+      }
     ],
     "cvUrl": "#"
   },
   "writing": [
-    { "date": "[Month Year]", "title": "[Post title]", "summary": "[One or two sentences summarizing the post.]", "url": "#" },
-    { "date": "[Month Year]", "title": "[Post title]", "summary": "[Short summary.]", "url": "#" },
-    { "date": "[Month Year]", "title": "[Post title]", "summary": "[Short summary.]", "url": "#" }
+    {
+      "date": "[Month Year]",
+      "title": "[Post title]",
+      "summary": "[One or two sentences summarizing the post.]",
+      "url": "#"
+    },
+    {
+      "date": "[Month Year]",
+      "title": "[Post title]",
+      "summary": "[Short summary.]",
+      "url": "#"
+    },
+    {
+      "date": "[Month Year]",
+      "title": "[Post title]",
+      "summary": "[Short summary.]",
+      "url": "#"
+    }
   ],
   "footer": {
-    "note": "[Where you're based, what you're currently open to — collaboration, questions, coffee chats.]",
+    "note": "Besançon, France.\nOpen to research collaboration, coffee chats and questions.",
     "links": [
-      { "label": "Email", "url": "mailto:you@example.com" },
-      { "label": "Scholar", "url": "#" },
-      { "label": "GitHub", "url": "#" },
-      { "label": "LinkedIn", "url": "#" }
+      {
+        "label": "Email",
+        "url": "mailto:eyoel.atnafe@gmail.com"
+      },
+      {
+        "label": "Scholar",
+        "url": "#"
+      },
+      {
+        "label": "GitHub",
+        "url": "#"
+      },
+      {
+        "label": "LinkedIn",
+        "url": "#"
+      }
     ]
   }
 }
