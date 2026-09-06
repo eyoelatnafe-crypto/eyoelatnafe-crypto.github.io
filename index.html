@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Name — Personal Site</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<script>
+  (function(){
+    try{
+      var saved = localStorage.getItem('site-theme');
+      var theme = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'slate' : 'paper');
+      document.documentElement.setAttribute('data-theme', theme);
+    }catch(e){ document.documentElement.setAttribute('data-theme','paper'); }
+  })();
+</script>
+<style>
+  :root{
+    /* default = paper */
+    --bg:#F1EFE8; --bg-grid:#E6E2D8; --surface:#FFFFFF; --surface-2:#EAE7DD;
+    --ink:#1E2A2C; --ink-soft:#3A4547; --muted:#75705F; --line:#D8D3C4;
+    --accent:#2F6F5E; --accent-soft:#E4EEE9; --accent-2:#B9862E; --accent-2-soft:#F3E9D4;
+    --focus:#2F6F5E; --shadow:0 1px 2px rgba(30,42,44,.06), 0 8px 24px -12px rgba(30,42,44,.12);
+  }
+  :root[data-theme="paper"]{
+    --bg:#F1EFE8; --bg-grid:#E6E2D8; --surface:#FFFFFF; --surface-2:#EAE7DD;
+    --ink:#1E2A2C; --ink-soft:#3A4547; --muted:#75705F; --line:#D8D3C4;
+    --accent:#2F6F5E; --accent-soft:#E4EEE9; --accent-2:#B9862E; --accent-2-soft:#F3E9D4;
+    --focus:#2F6F5E; --shadow:0 1px 2px rgba(30,42,44,.06), 0 8px 24px -12px rgba(30,42,44,.12);
+  }
+  :root[data-theme="slate"]{
+    --bg:#14191A; --bg-grid:#1B2122; --surface:#1B2122; --surface-2:#20272A;
+    --ink:#EDEAE1; --ink-soft:#C9C4B7; --muted:#93907F; --line:#2C3335;
+    --accent:#57B39B; --accent-soft:#1E2F2A; --accent-2:#D9A752; --accent-2-soft:#2E2717;
+    --focus:#57B39B; --shadow:0 1px 2px rgba(0,0,0,.35), 0 12px 32px -14px rgba(0,0,0,.55);
+  }
+  :root[data-theme="blueprint"]{
+    --bg:#0E1E33; --bg-grid:#16294A; --surface:#122845; --surface-2:#16305A;
+    --ink:#E9F1FB; --ink-soft:#C3D5EC; --muted:#8CA3C4; --line:#2A4A78;
+    --accent:#6FB7E0; --accent-soft:#183C5C; --accent-2:#E8B85B; --accent-2-soft:#3B2F17;
+    --focus:#6FB7E0; --shadow:0 1px 2px rgba(0,0,0,.35), 0 12px 32px -14px rgba(0,10,25,.6);
+  }
+  :root[data-theme="ivory"]{
+    --bg:#FBF9F5; --bg-grid:#FBF9F5; --surface:#FFFFFF; --surface-2:#F3EEE4;
+    --ink:#241F1B; --ink-soft:#4A413A; --muted:#8A7F72; --line:#E7E1D6;
+    --accent:#7A2E2E; --accent-soft:#F3E4E2; --accent-2:#A8823C; --accent-2-soft:#F1E7D2;
+    --focus:#7A2E2E; --shadow:0 1px 2px rgba(36,31,27,.05), 0 8px 24px -14px rgba(36,31,27,.12);
+  }
+  :root[data-theme="terminal"]{
+    --bg:#0B0E0C; --bg-grid:#141A15; --surface:#10140F; --surface-2:#151B14;
+    --ink:#D8E8DC; --ink-soft:#A9C2AE; --muted:#6F8A75; --line:#1E2620;
+    --accent:#4FD68C; --accent-soft:#122A1C; --accent-2:#E0A64F; --accent-2-soft:#2E2210;
+    --focus:#4FD68C; --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 32px -14px rgba(0,0,0,.7);
+  }
+
+  *{box-sizing:border-box;}
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:var(--bg);
+    background-image:
+      linear-gradient(var(--bg-grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--bg-grid) 1px, transparent 1px);
+    background-size:32px 32px;
+    color:var(--ink);
+    font-family:"Source Serif 4", Georgia, "Times New Roman", serif;
+    -webkit-font-smoothing:antialiased;
+    transition: background-color .25s ease, color .25s ease;
+  }
+  ::selection{ background:var(--accent-soft); color:var(--ink); }
+  a{ color:inherit; }
+  a:focus-visible, button:focus-visible{ outline:2px solid var(--focus); outline-offset:3px; }
+  h1,h2,h3{ font-family:"Fraunces", Georgia, serif; font-weight:600; text-wrap:balance; margin:0; letter-spacing:-0.01em; }
+  .mono{ font-family:"IBM Plex Mono", ui-monospace, monospace; }
+  .wrap{ max-width:920px; margin:0 auto; padding:0 28px; }
+
+  .nav{
+    position:sticky; top:0; z-index:20;
+    backdrop-filter:blur(8px);
+    background:color-mix(in srgb, var(--bg) 82%, transparent);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{ display:flex; align-items:center; justify-content:space-between; height:60px; gap:16px; }
+  .nav-brand{ font-family:"Fraunces",serif; font-weight:600; font-size:1.05rem; text-decoration:none; white-space:nowrap; }
+  .nav-links{ display:flex; gap:22px; list-style:none; margin:0; padding:0; }
+  .nav-links a{
+    text-decoration:none; font-family:"IBM Plex Mono",monospace; font-size:.78rem;
+    letter-spacing:.06em; text-transform:uppercase; color:var(--muted);
+    padding:6px 0; border-bottom:1px solid transparent; transition:color .15s, border-color .15s;
+  }
+  .nav-links a:hover{ color:var(--ink); border-color:var(--accent); }
+  .nav-right{ display:flex; align-items:center; gap:14px; }
+
+  /* theme switcher */
+  .theme-switch{ display:flex; align-items:center; gap:8px; }
+  .theme-switch .label{ font-family:"IBM Plex Mono",monospace; font-size:.68rem; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); }
+  .theme-swatches{ display:flex; gap:6px; }
+  .swatch{
+    width:18px; height:18px; border-radius:50%; padding:0; cursor:pointer;
+    border:2px solid transparent; position:relative;
+    background: var(--swatch-bg); box-shadow: inset 0 0 0 1px var(--line);
+  }
+  .swatch::after{
+    content:""; position:absolute; inset:3px; border-radius:50%; background:var(--swatch-accent);
+  }
+  .swatch[aria-pressed="true"]{ border-color:var(--ink); }
+  .swatch[data-theme-option="paper"]{ --swatch-bg:#F1EFE8; --swatch-accent:#2F6F5E; }
+  .swatch[data-theme-option="slate"]{ --swatch-bg:#14191A; --swatch-accent:#57B39B; }
+  .swatch[data-theme-option="blueprint"]{ --swatch-bg:#0E1E33; --swatch-accent:#6FB7E0; }
+  .swatch[data-theme-option="ivory"]{ --swatch-bg:#FBF9F5; --swatch-accent:#7A2E2E; }
+  .swatch[data-theme-option="terminal"]{ --swatch-bg:#0B0E0C; --swatch-accent:#4FD68C; }
+
+  section{ padding:88px 0; border-bottom:1px solid var(--line); }
+  section:last-of-type{ border-bottom:none; }
+  .eyebrow{ font-family:"IBM Plex Mono",monospace; font-size:.76rem; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); margin:0 0 14px; }
+
+  .hero{ padding-top:72px; }
+  .hero-grid{ display:grid; grid-template-columns:1.4fr .9fr; gap:48px; align-items:start; }
+  .hero h1{ font-size:clamp(2.3rem, 4.4vw, 3.4rem); line-height:1.05; }
+  .hero .role{ font-size:1.15rem; color:var(--ink-soft); margin-top:14px; max-width:46ch; }
+  .hero p.bio{ color:var(--ink-soft); font-size:1.02rem; line-height:1.7; margin-top:22px; max-width:56ch; }
+  .hero-links{ display:flex; flex-wrap:wrap; gap:10px 18px; margin-top:26px; }
+  .hero-links a{ text-decoration:none; font-family:"IBM Plex Mono",monospace; font-size:.82rem; color:var(--ink-soft); border-bottom:1px solid var(--line); padding-bottom:2px; }
+  .hero-links a:hover{ color:var(--accent); border-color:var(--accent); }
+
+  .card-photo{
+    aspect-ratio:4/5; border-radius:6px; overflow:hidden;
+    background:radial-gradient(120% 100% at 20% 0%, var(--accent-soft), transparent 55%), var(--surface-2);
+    border:1px solid var(--line); box-shadow:var(--shadow);
+    display:flex; align-items:flex-end; padding:18px; position:relative;
+  }
+  .card-photo::before{ content:""; position:absolute; inset:0; background-image:repeating-linear-gradient(0deg, transparent, transparent 27px, var(--line) 28px); opacity:.35; }
+  .card-photo .tag{ position:relative; font-family:"IBM Plex Mono",monospace; font-size:.72rem; color:var(--muted); background:var(--surface); border:1px solid var(--line); padding:5px 10px; border-radius:100px; }
+
+  h2.section-title{ font-size:1.9rem; margin-bottom:6px; }
+  .section-sub{ color:var(--muted); font-size:.98rem; margin:8px 0 40px; max-width:56ch; }
+
+  .stack{ display:flex; flex-direction:column; gap:2px; }
+  .research-item{ display:grid; grid-template-columns:96px 1fr auto; gap:22px; align-items:start; padding:26px 22px; background:var(--surface); border:1px solid var(--line); border-radius:6px; }
+  .research-item + .research-item{ margin-top:14px; }
+  .research-item .year{ font-family:"IBM Plex Mono",monospace; color:var(--muted); font-size:.85rem; padding-top:3px; }
+  .research-item h3{ font-size:1.2rem; }
+  .research-item p{ color:var(--ink-soft); margin:8px 0 0; line-height:1.65; max-width:60ch; }
+  .research-item .tags{ display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
+  .pill{ font-family:"IBM Plex Mono",monospace; font-size:.72rem; padding:3px 9px; border-radius:100px; background:var(--accent-soft); color:var(--accent); }
+  .pill.alt{ background:var(--accent-2-soft); color:var(--accent-2); }
+  .research-item .go{ align-self:center; font-family:"IBM Plex Mono",monospace; font-size:.78rem; text-decoration:none; color:var(--muted); white-space:nowrap; }
+  .research-item .go:hover{ color:var(--accent); }
+
+  .academic-grid{ display:grid; grid-template-columns:1fr 1fr; gap:40px; }
+  .timeline{ list-style:none; margin:0; padding:0; border-left:2px solid var(--line); }
+  .timeline li{ position:relative; padding:2px 0 26px 22px; }
+  .timeline li::before{ content:""; position:absolute; left:-6px; top:6px; width:10px; height:10px; border-radius:50%; background:var(--surface); border:2px solid var(--accent); }
+  .timeline .when{ font-family:"IBM Plex Mono",monospace; font-size:.76rem; color:var(--muted); }
+  .timeline .what{ margin-top:4px; font-size:1rem; color:var(--ink); }
+  .timeline .where{ color:var(--muted); font-size:.92rem; }
+
+  .pub-list{ list-style:none; margin:0; padding:0; }
+  .pub-list li{ padding:16px 0; border-bottom:1px solid var(--line); }
+  .pub-list li:first-child{ padding-top:0; }
+  .pub-title{ font-size:1rem; line-height:1.5; }
+  .pub-meta{ font-family:"IBM Plex Mono",monospace; font-size:.76rem; color:var(--muted); margin-top:6px; }
+
+  .cv-btn{ display:inline-flex; align-items:center; gap:8px; margin-top:26px; font-family:"IBM Plex Mono",monospace; font-size:.82rem; text-decoration:none; color:var(--bg); background:var(--ink); padding:11px 18px; border-radius:5px; }
+  .cv-btn:hover{ background:var(--accent); }
+
+  .posts{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+  .post{ background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:24px; display:flex; flex-direction:column; gap:12px; min-height:210px; }
+  .post .date{ font-family:"IBM Plex Mono",monospace; font-size:.74rem; color:var(--muted); }
+  .post h3{ font-size:1.08rem; line-height:1.35; }
+  .post p{ color:var(--ink-soft); font-size:.92rem; line-height:1.6; margin:0; flex:1; }
+  .post .read{ font-family:"IBM Plex Mono",monospace; font-size:.76rem; color:var(--accent); text-decoration:none; }
+
+  footer{ padding:56px 0 80px; }
+  .footer-grid{ display:flex; justify-content:space-between; align-items:flex-end; gap:20px; flex-wrap:wrap; }
+  footer .note{ color:var(--muted); font-size:.88rem; max-width:44ch; line-height:1.6; }
+  footer .links{ display:flex; gap:18px; }
+  footer .links a{ font-family:"IBM Plex Mono",monospace; font-size:.8rem; text-decoration:none; color:var(--ink-soft); }
+  footer .links a:hover{ color:var(--accent); }
+
+  @media (max-width:760px){
+    .hero-grid{ grid-template-columns:1fr; }
+    .hero .card-photo{ max-width:220px; }
+    .academic-grid{ grid-template-columns:1fr; }
+    .posts{ grid-template-columns:1fr; }
+    .research-item{ grid-template-columns:1fr; }
+    .research-item .go{ justify-self:start; }
+    .nav-links{ display:none; }
+  }
+</style>
+</head>
+<body>
+
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a class="nav-brand" href="#top">Your Name</a>
+    <ul class="nav-links">
+      <li><a href="#research">Research</a></li>
+      <li><a href="#academic">Academic</a></li>
+      <li><a href="#writing">Writing</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="theme-switch">
+        <span class="label">Theme</span>
+        <div class="theme-swatches" id="theme-swatches">
+          <button class="swatch" data-theme-option="paper" aria-label="Paper theme" aria-pressed="false" title="Paper"></button>
+          <button class="swatch" data-theme-option="slate" aria-label="Slate theme" aria-pressed="false" title="Slate"></button>
+          <button class="swatch" data-theme-option="blueprint" aria-label="Blueprint theme" aria-pressed="false" title="Blueprint"></button>
+          <button class="swatch" data-theme-option="ivory" aria-label="Ivory Editorial theme" aria-pressed="false" title="Ivory Editorial"></button>
+          <button class="swatch" data-theme-option="terminal" aria-label="Terminal theme" aria-pressed="false" title="Terminal"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div id="top"></div>
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow">[Your Title — e.g. Doctoral Researcher, Field]</p>
+      <h1>Your Name</h1>
+      <p class="role">[One sentence: what you work on and why it matters — the pitch you'd give in an elevator.]</p>
+      <p class="bio">[A short paragraph: your affiliation, what you're currently researching or building, and one detail that makes you memorable — a past role, a habit, an angle. Two to four sentences is plenty.]</p>
+      <div class="hero-links">
+        <a href="mailto:you@example.com">you@example.com</a>
+        <a href="#">Google Scholar</a>
+        <a href="#">GitHub</a>
+        <a href="#">LinkedIn</a>
+      </div>
+    </div>
+    <div class="card-photo">
+      <span class="tag">fig. 1 — your photo here</span>
+    </div>
+  </div>
+</section>
+
+<section id="research">
+  <div class="wrap">
+    <p class="eyebrow">Work</p>
+    <h2 class="section-title">Research</h2>
+    <p class="section-sub">What you're building right now, newest first. Copy one block below to add the next project.</p>
+    <div class="stack">
+      <article class="research-item">
+        <div class="year mono">2026–</div>
+        <div>
+          <h3>[Project title]</h3>
+          <p>[One or two sentences on what the project does and why it's interesting — the question it answers, not just the method.]</p>
+          <div class="tags"><span class="pill">tag one</span><span class="pill alt">tag two</span><span class="pill">tag three</span></div>
+        </div>
+        <a class="go" href="#">Details →</a>
+      </article>
+      <article class="research-item">
+        <div class="year mono">2025</div>
+        <div>
+          <h3>[Project title]</h3>
+          <p>[Short description of this project.]</p>
+          <div class="tags"><span class="pill">tag one</span><span class="pill alt">tag two</span></div>
+        </div>
+        <a class="go" href="#">Details →</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="academic">
+  <div class="wrap">
+    <p class="eyebrow">Academic Life</p>
+    <h2 class="section-title">Academic</h2>
+    <p class="section-sub">Timeline, publications, and a current CV. Add a new list item as things happen.</p>
+    <div class="academic-grid">
+      <div>
+        <h3 style="font-size:1.05rem; margin-bottom:18px;">Timeline</h3>
+        <ul class="timeline">
+          <li><div class="when">[Year] — present</div><div class="what">[Degree / role]</div><div class="where">[Institution / lab]</div></li>
+          <li><div class="when">[Year] — [Year]</div><div class="what">[Prior role]</div><div class="where">[Organization]</div></li>
+          <li><div class="when">[Year]</div><div class="what">[Degree]</div><div class="where">[Institution]</div></li>
+        </ul>
+        <a class="cv-btn" href="#">↓ Download CV (PDF)</a>
+      </div>
+      <div>
+        <h3 style="font-size:1.05rem; margin-bottom:18px;">Selected publications</h3>
+        <ul class="pub-list">
+          <li><div class="pub-title">[Paper title]</div><div class="pub-meta">[Authors] — [Journal / Venue], [Year]</div></li>
+          <li><div class="pub-title">[Paper title]</div><div class="pub-meta">[Authors] — [Journal / Venue], [Year]</div></li>
+          <li><div class="pub-title">[Paper title]</div><div class="pub-meta">[Authors] — [Journal / Venue], [Year]</div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="writing">
+  <div class="wrap">
+    <p class="eyebrow">Personal Takes</p>
+    <h2 class="section-title">Writing</h2>
+    <p class="section-sub">Shorter and less formal than the research. Copy a card to add a new post.</p>
+    <div class="posts">
+      <article class="post">
+        <span class="date mono">[Month Year]</span>
+        <h3>[Post title]</h3>
+        <p>[One or two sentences summarizing the post — enough to make someone want to click through.]</p>
+        <a class="read" href="#">Read →</a>
+      </article>
+      <article class="post">
+        <span class="date mono">[Month Year]</span>
+        <h3>[Post title]</h3>
+        <p>[Short summary.]</p>
+        <a class="read" href="#">Read →</a>
+      </article>
+      <article class="post">
+        <span class="date mono">[Month Year]</span>
+        <h3>[Post title]</h3>
+        <p>[Short summary.]</p>
+        <a class="read" href="#">Read →</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap footer-grid">
+    <p class="note">[Where you're based, what you're currently open to — collaboration, questions, coffee chats.]</p>
+    <div class="links">
+      <a href="mailto:you@example.com">Email</a>
+      <a href="#">Scholar</a>
+      <a href="#">GitHub</a>
+      <a href="#">LinkedIn</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var id = a.getAttribute('href').slice(1);
+      var target = id ? document.getElementById(id) : null;
+      if(target){ e.preventDefault(); target.scrollIntoView({behavior:'smooth', block:'start'}); }
+    });
+  });
+
+  (function(){
+    var current = document.documentElement.getAttribute('data-theme') || 'paper';
+    var buttons = document.querySelectorAll('.swatch');
+    function setActive(theme){
+      buttons.forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.themeOption === theme ? 'true' : 'false'); });
+    }
+    setActive(current);
+    buttons.forEach(function(b){
+      b.addEventListener('click', function(){
+        var theme = b.dataset.themeOption;
+        document.documentElement.setAttribute('data-theme', theme);
+        setActive(theme);
+        try{ localStorage.setItem('site-theme', theme); }catch(e){}
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>
