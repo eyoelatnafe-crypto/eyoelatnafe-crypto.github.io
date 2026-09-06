@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edit Site Content</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Source+Serif+4:ital,wght@0,400;0,600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --bg:#F1EFE8; --surface:#FFFFFF; --surface-2:#EAE7DD; --ink:#1E2A2C; --ink-soft:#3A4547;
+    --muted:#75705F; --line:#D8D3C4; --accent:#2F6F5E; --accent-soft:#E4EEE9;
+    --danger:#A6402F; --danger-soft:#F5E4DF; --focus:#2F6F5E;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#14191A; --surface:#1B2122; --surface-2:#20272A; --ink:#EDEAE1; --ink-soft:#C9C4B7;
+      --muted:#93907F; --line:#2C3335; --accent:#57B39B; --accent-soft:#1E2F2A;
+      --danger:#D9705C; --danger-soft:#3A2420; --focus:#57B39B;
+    }
+  }
+  *{box-sizing:border-box;}
+  body{ margin:0; background:var(--bg); color:var(--ink); font-family:"Source Serif 4",Georgia,serif; -webkit-font-smoothing:antialiased; }
+  .mono{ font-family:"IBM Plex Mono",ui-monospace,monospace; }
+  a{ color:var(--accent); }
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible{ outline:2px solid var(--focus); outline-offset:2px; }
+  h1,h2{ font-family:"Fraunces",Georgia,serif; font-weight:600; margin:0; letter-spacing:-.01em; }
+  .wrap{ max-width:760px; margin:0 auto; padding:40px 24px 100px; }
+  header.top{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:6px; flex-wrap:wrap; }
+  header.top a{ font-family:"IBM Plex Mono",monospace; font-size:.8rem; text-decoration:none; }
+  h1{ font-size:1.7rem; }
+  .sub{ color:var(--muted); font-size:.95rem; margin:8px 0 36px; max-width:56ch; line-height:1.6; }
+
+  fieldset{ border:1px solid var(--line); border-radius:8px; padding:22px 22px 26px; margin:0 0 24px; background:var(--surface); }
+  legend{ font-family:"IBM Plex Mono",monospace; font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; color:var(--accent); padding:0 8px; }
+  label{ display:block; font-family:"IBM Plex Mono",monospace; font-size:.72rem; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); margin:14px 0 6px; }
+  label:first-of-type{ margin-top:0; }
+  input[type="text"], input[type="email"], input[type="password"], textarea{
+    width:100%; font-family:"Source Serif 4",Georgia,serif; font-size:.98rem; color:var(--ink);
+    background:var(--bg); border:1px solid var(--line); border-radius:5px; padding:9px 11px;
+  }
+  textarea{ resize:vertical; min-height:64px; line-height:1.5; }
+  .row2{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+
+  .item{ border:1px dashed var(--line); border-radius:6px; padding:16px; margin-top:14px; position:relative; }
+  .item:first-of-type{ margin-top:4px; }
+  .remove-btn{
+    font-family:"IBM Plex Mono",monospace; font-size:.72rem; color:var(--danger); background:var(--danger-soft);
+    border:none; border-radius:100px; padding:5px 11px; cursor:pointer; margin-top:12px;
+  }
+  .remove-btn:hover{ opacity:.85; }
+  .add-btn{
+    font-family:"IBM Plex Mono",monospace; font-size:.8rem; color:var(--accent); background:var(--accent-soft);
+    border:none; border-radius:6px; padding:9px 14px; cursor:pointer; margin-top:16px;
+  }
+  .add-btn:hover{ opacity:.88; }
+
+  .save-bar{
+    position:sticky; bottom:0; margin:0 -24px; padding:16px 24px; background:color-mix(in srgb, var(--bg) 90%, transparent);
+    backdrop-filter:blur(6px); border-top:1px solid var(--line); display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+  }
+  .save-btn{
+    font-family:"IBM Plex Mono",monospace; font-size:.88rem; color:var(--bg); background:var(--ink);
+    border:none; border-radius:6px; padding:12px 20px; cursor:pointer;
+  }
+  .save-btn:hover{ background:var(--accent); }
+  .save-btn:disabled{ opacity:.5; cursor:not-allowed; }
+  .ghost-btn{
+    font-family:"IBM Plex Mono",monospace; font-size:.8rem; color:var(--ink-soft); background:transparent;
+    border:1px solid var(--line); border-radius:6px; padding:11px 16px; cursor:pointer;
+  }
+  #status{ font-family:"IBM Plex Mono",monospace; font-size:.8rem; color:var(--muted); }
+  #status.ok{ color:var(--accent); }
+  #status.err{ color:var(--danger); }
+
+  .token-row{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+  .token-row input[type="password"]{ flex:1; min-width:220px; }
+  .check{ display:flex; align-items:center; gap:6px; font-family:"IBM Plex Mono",monospace; font-size:.75rem; color:var(--muted); }
+  .note{ font-size:.85rem; color:var(--muted); line-height:1.6; margin-top:10px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1>Edit site content</h1>
+    <a href="./index.html">← back to site</a>
+  </header>
+  <p class="sub">Fill in the fields below, click <strong>Save to GitHub</strong>, and the live site updates itself in about a minute. This page writes directly to <span class="mono">content.json</span> in your repo — nothing else changes.</p>
+
+  <fieldset>
+    <legend>GitHub access</legend>
+    <label for="tok">Personal access token (fine-grained, Contents: Read and write, scoped to this one repo)</label>
+    <div class="token-row">
+      <input type="password" id="tok" placeholder="github_pat_...">
+      <label class="check" style="margin:0;"><input type="checkbox" id="tokRemember"> remember on this device</label>
+      <button type="button" class="ghost-btn" id="tokClear">Clear saved token</button>
+    </div>
+    <p class="note">Generate one at GitHub → Settings → Developer settings → Personal access tokens → Fine-grained tokens. Only use this on a device you trust — the token is kept only in this browser's storage, never sent anywhere but api.github.com.</p>
+  </fieldset>
+
+  <fieldset>
+    <legend>About you</legend>
+    <label for="f-eyebrow">Title / role line</label>
+    <input type="text" id="f-eyebrow">
+    <label for="f-name">Name</label>
+    <input type="text" id="f-name">
+    <label for="f-role">One-line pitch</label>
+    <textarea id="f-role"></textarea>
+    <label for="f-bio">Short bio</label>
+    <textarea id="f-bio" style="min-height:90px;"></textarea>
+    <label for="f-email">Email</label>
+    <input type="email" id="f-email">
+    <label>Links</label>
+    <div id="hero-links"></div>
+    <button type="button" class="add-btn" data-add="heroLinks">+ Add link</button>
+  </fieldset>
+
+  <fieldset>
+    <legend>Research projects</legend>
+    <div id="research-items"></div>
+    <button type="button" class="add-btn" data-add="research">+ Add project</button>
+  </fieldset>
+
+  <fieldset>
+    <legend>Academic timeline</legend>
+    <div id="timeline-items"></div>
+    <button type="button" class="add-btn" data-add="timeline">+ Add timeline entry</button>
+  </fieldset>
+
+  <fieldset>
+    <legend>Publications</legend>
+    <div id="pub-items"></div>
+    <button type="button" class="add-btn" data-add="publications">+ Add publication</button>
+    <label for="f-cv" style="margin-top:20px;">CV link (URL to a hosted PDF)</label>
+    <input type="text" id="f-cv">
+  </fieldset>
+
+  <fieldset>
+    <legend>Writing / personal takes</legend>
+    <div id="writing-items"></div>
+    <button type="button" class="add-btn" data-add="writing">+ Add post</button>
+  </fieldset>
+
+  <fieldset>
+    <legend>Footer</legend>
+    <label for="f-footnote">Closing note</label>
+    <textarea id="f-footnote"></textarea>
+    <label>Links</label>
+    <div id="footer-links"></div>
+    <button type="button" class="add-btn" data-add="footerLinks">+ Add link</button>
+  </fieldset>
+
+  <div class="save-bar">
+    <button class="save-btn" id="saveBtn">Save to GitHub</button>
+    <button class="ghost-btn" id="reloadBtn" type="button">Reload from site</button>
+    <span id="status"></span>
+  </div>
+</div>
+
+<script>
+  var OWNER = 'eyoelatnafe-crypto';
+  var REPO = 'eyoelatnafe-crypto.github.io';
+  var BRANCH = 'main';
+  var FILE_PATH = 'content.json';
+
+  var state = null;
+  var currentSha = null;
+
+  function esc(s){ var d=document.createElement('div'); d.textContent = s==null?'':String(s); return d.innerHTML; }
+
+  function blank(kind){
+    if(kind === 'heroLinks' || kind === 'footerLinks') return { label:'', url:'' };
+    if(kind === 'research') return { year:'', title:'', description:'', tags:'', link:'' };
+    if(kind === 'timeline') return { when:'', what:'', where:'' };
+    if(kind === 'publications') return { title:'', meta:'' };
+    if(kind === 'writing') return { date:'', title:'', summary:'', url:'' };
+  }
+
+  function bindList(containerId, getArr, rowHtml, rerender){
+    var container = document.getElementById(containerId);
+    container.addEventListener('input', function(e){
+      var field = e.target.dataset.field;
+      if(!field) return;
+      var row = e.target.closest('[data-index]');
+      getArr()[parseInt(row.dataset.index,10)][field] = e.target.value;
+    });
+    container.addEventListener('click', function(e){
+      if(e.target.dataset.action === 'remove'){
+        var row = e.target.closest('[data-index]');
+        getArr().splice(parseInt(row.dataset.index,10), 1);
+        rerender();
+      }
+    });
+  }
+
+  function renderHeroLinks(){
+    document.getElementById('hero-links').innerHTML = state.hero.links.map(function(l,i){
+      return '<div class="item" data-index="'+i+'"><div class="row2">'+
+        '<div><label>Label</label><input type="text" data-field="label" value="'+esc(l.label)+'"></div>'+
+        '<div><label>URL</label><input type="text" data-field="url" value="'+esc(l.url)+'"></div>'+
+        '</div><button type="button" class="remove-btn" data-action="remove">Remove</button></div>';
+    }).join('');
+  }
+  function renderFooterLinks(){
+    document.getElementById('footer-links').innerHTML = state.footer.links.map(function(l,i){
+      return '<div class="item" data-index="'+i+'"><div class="row2">'+
+        '<div><label>Label</label><input type="text" data-field="label" value="'+esc(l.label)+'"></div>'+
+        '<div><label>URL</label><input type="text" data-field="url" value="'+esc(l.url)+'"></div>'+
+        '</div><button type="button" class="remove-btn" data-action="remove">Remove</button></div>';
+    }).join('');
+  }
+  function renderResearch(){
+    document.getElementById('research-items').innerHTML = state.research.map(function(r,i){
+      return '<div class="item" data-index="'+i+'">'+
+        '<div class="row2"><div><label>Year</label><input type="text" data-field="year" value="'+esc(r.year)+'"></div>'+
+        '<div><label>Title</label><input type="text" data-field="title" value="'+esc(r.title)+'"></div></div>'+
+        '<label>Description</label><textarea data-field="description">'+esc(r.description)+'</textarea>'+
+        '<div class="row2"><div><label>Tags (comma separated)</label><input type="text" data-field="tags" value="'+esc(r.tags)+'"></div>'+
+        '<div><label>Link URL</label><input type="text" data-field="link" value="'+esc(r.link)+'"></div></div>'+
+        '<button type="button" class="remove-btn" data-action="remove">Remove project</button></div>';
+    }).join('');
+  }
+  function renderTimeline(){
+    document.getElementById('timeline-items').innerHTML = state.academic.timeline.map(function(t,i){
+      return '<div class="item" data-index="'+i+'">'+
+        '<label>When</label><input type="text" data-field="when" value="'+esc(t.when)+'">'+
+        '<label>What</label><input type="text" data-field="what" value="'+esc(t.what)+'">'+
+        '<label>Where</label><input type="text" data-field="where" value="'+esc(t.where)+'">'+
+        '<button type="button" class="remove-btn" data-action="remove">Remove</button></div>';
+    }).join('');
+  }
+  function renderPubs(){
+    document.getElementById('pub-items').innerHTML = state.academic.publications.map(function(p,i){
+      return '<div class="item" data-index="'+i+'">'+
+        '<label>Title</label><input type="text" data-field="title" value="'+esc(p.title)+'">'+
+        '<label>Authors / venue / year</label><input type="text" data-field="meta" value="'+esc(p.meta)+'">'+
+        '<button type="button" class="remove-btn" data-action="remove">Remove</button></div>';
+    }).join('');
+  }
+  function renderWriting(){
+    document.getElementById('writing-items').innerHTML = state.writing.map(function(w,i){
+      return '<div class="item" data-index="'+i+'">'+
+        '<div class="row2"><div><label>Date</label><input type="text" data-field="date" value="'+esc(w.date)+'"></div>'+
+        '<div><label>Title</label><input type="text" data-field="title" value="'+esc(w.title)+'"></div></div>'+
+        '<label>Summary</label><textarea data-field="summary">'+esc(w.summary)+'</textarea>'+
+        '<label>Post URL</label><input type="text" data-field="url" value="'+esc(w.url)+'">'+
+        '<button type="button" class="remove-btn" data-action="remove">Remove post</button></div>';
+    }).join('');
+  }
+
+  function renderAll(){
+    document.getElementById('f-eyebrow').value = state.hero.eyebrow || '';
+    document.getElementById('f-name').value = state.hero.name || '';
+    document.getElementById('f-role').value = state.hero.role || '';
+    document.getElementById('f-bio').value = state.hero.bio || '';
+    document.getElementById('f-email').value = state.hero.email || '';
+    document.getElementById('f-cv').value = state.academic.cvUrl || '';
+    document.getElementById('f-footnote').value = state.footer.note || '';
+    renderHeroLinks(); renderResearch(); renderTimeline(); renderPubs(); renderWriting(); renderFooterLinks();
+  }
+
+  ['f-eyebrow','f-name','f-role','f-bio','f-email'].forEach(function(id){
+    var field = id.replace('f-','');
+    document.getElementById(id).addEventListener('input', function(e){ state.hero[field] = e.target.value; });
+  });
+  document.getElementById('f-cv').addEventListener('input', function(e){ state.academic.cvUrl = e.target.value; });
+  document.getElementById('f-footnote').addEventListener('input', function(e){ state.footer.note = e.target.value; });
+
+  bindList('hero-links', function(){ return state.hero.links; }, null, renderHeroLinks);
+  bindList('footer-links', function(){ return state.footer.links; }, null, renderFooterLinks);
+  bindList('research-items', function(){ return state.research; }, null, renderResearch);
+  bindList('timeline-items', function(){ return state.academic.timeline; }, null, renderTimeline);
+  bindList('pub-items', function(){ return state.academic.publications; }, null, renderPubs);
+  bindList('writing-items', function(){ return state.writing; }, null, renderWriting);
+
+  document.querySelectorAll('[data-add]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var kind = btn.dataset.add;
+      var item = blank(kind);
+      if(kind === 'heroLinks'){ state.hero.links.push(item); renderHeroLinks(); }
+      else if(kind === 'footerLinks'){ state.footer.links.push(item); renderFooterLinks(); }
+      else if(kind === 'research'){ state.research.push(item); renderResearch(); }
+      else if(kind === 'timeline'){ state.academic.timeline.push(item); renderTimeline(); }
+      else if(kind === 'publications'){ state.academic.publications.push(item); renderPubs(); }
+      else if(kind === 'writing'){ state.writing.push(item); renderWriting(); }
+    });
+  });
+
+  function toPayload(){
+    var d = JSON.parse(JSON.stringify(state));
+    d.research.forEach(function(r){ r.tags = (r.tags || '').split(',').map(function(t){ return t.trim(); }).filter(Boolean); });
+    return d;
+  }
+  function fromLoaded(d){
+    d.research = (d.research || []).map(function(r){ return Object.assign({}, r, { tags: (r.tags || []).join(', ') }); });
+    return d;
+  }
+
+  function b64EncodeUnicode(str){
+    return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, p1){ return String.fromCharCode('0x' + p1); }));
+  }
+
+  function setStatus(msg, kind){
+    var el = document.getElementById('status');
+    el.textContent = msg;
+    el.className = kind || '';
+  }
+
+  function getToken(){ return document.getElementById('tok').value.trim(); }
+
+  document.getElementById('tokRemember').addEventListener('change', function(e){
+    if(!e.target.checked){ try{ localStorage.removeItem('site-editor-token'); }catch(err){} }
+  });
+  document.getElementById('tokClear').addEventListener('click', function(){
+    document.getElementById('tok').value = '';
+    document.getElementById('tokRemember').checked = false;
+    try{ localStorage.removeItem('site-editor-token'); }catch(err){}
+    setStatus('Saved token cleared.', '');
+  });
+  (function(){
+    try{
+      var saved = localStorage.getItem('site-editor-token');
+      if(saved){ document.getElementById('tok').value = saved; document.getElementById('tokRemember').checked = true; }
+    }catch(err){}
+  })();
+
+  function loadContent(){
+    setStatus('Loading current content…', '');
+    return fetch('./content.json', { cache: 'no-store' })
+      .then(function(r){ if(!r.ok) throw new Error('content.json not found next to this page'); return r.json(); })
+      .then(function(d){ state = fromLoaded(d); renderAll(); setStatus('Loaded.', 'ok'); })
+      .catch(function(err){ setStatus('Could not load content.json: ' + err.message, 'err'); });
+  }
+
+  document.getElementById('reloadBtn').addEventListener('click', function(){
+    if(confirm('Reload from the live site? Any unsaved changes here will be lost.')) loadContent();
+  });
+
+  document.getElementById('saveBtn').addEventListener('click', function(){
+    var token = getToken();
+    if(!token){ setStatus('Paste your GitHub token above first.', 'err'); return; }
+    if(document.getElementById('tokRemember').checked){
+      try{ localStorage.setItem('site-editor-token', token); }catch(err){}
+    }
+    var btn = document.getElementById('saveBtn');
+    btn.disabled = true;
+    setStatus('Saving…', '');
+
+    var apiUrl = 'https://api.github.com/repos/' + OWNER + '/' + REPO + '/contents/' + FILE_PATH;
+    fetch(apiUrl + '?ref=' + BRANCH, { headers: { 'Authorization': 'Bearer ' + token, 'Accept': 'application/vnd.github+json' } })
+      .then(function(r){
+        if(!r.ok) throw new Error('Could not read current file (HTTP ' + r.status + '). Check the token has Contents: Read and write on this repo.');
+        return r.json();
+      })
+      .then(function(fileInfo){
+        var payload = toPayload();
+        var body = {
+          message: 'Update site content',
+          content: b64EncodeUnicode(JSON.stringify(payload, null, 2)),
+          sha: fileInfo.sha,
+          branch: BRANCH
+        };
+        return fetch(apiUrl, {
+          method: 'PUT',
+          headers: { 'Authorization': 'Bearer ' + token, 'Accept': 'application/vnd.github+json', 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        });
+      })
+      .then(function(r){
+        if(!r.ok) return r.json().then(function(j){ throw new Error(j.message || ('HTTP ' + r.status)); });
+        return r.json();
+      })
+      .then(function(){
+        setStatus('Saved. Your site will update in about a minute — refresh it then.', 'ok');
+      })
+      .catch(function(err){
+        setStatus('Save failed: ' + err.message, 'err');
+      })
+      .finally(function(){ btn.disabled = false; });
+  });
+
+  loadContent();
+</script>
+</body>
+</html>

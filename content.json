@@ -1,0 +1,60 @@
+{
+  "meta": {
+    "title": "Your Name — Personal Site"
+  },
+  "hero": {
+    "eyebrow": "[Your Title — e.g. Doctoral Researcher, Field]",
+    "name": "Your Name",
+    "role": "[One sentence: what you work on and why it matters — the pitch you'd give in an elevator.]",
+    "bio": "[A short paragraph: your affiliation, what you're currently researching or building, and one detail that makes you memorable. Two to four sentences is plenty.]",
+    "email": "you@example.com",
+    "links": [
+      { "label": "Google Scholar", "url": "#" },
+      { "label": "GitHub", "url": "#" },
+      { "label": "LinkedIn", "url": "#" }
+    ]
+  },
+  "research": [
+    {
+      "year": "2026–",
+      "title": "[Project title]",
+      "description": "[One or two sentences on what the project does and why it's interesting.]",
+      "tags": ["tag one", "tag two", "tag three"],
+      "link": "#"
+    },
+    {
+      "year": "2025",
+      "title": "[Project title]",
+      "description": "[Short description of this project.]",
+      "tags": ["tag one", "tag two"],
+      "link": "#"
+    }
+  ],
+  "academic": {
+    "timeline": [
+      { "when": "[Year] — present", "what": "[Degree / role]", "where": "[Institution / lab]" },
+      { "when": "[Year] — [Year]", "what": "[Prior role]", "where": "[Organization]" },
+      { "when": "[Year]", "what": "[Degree]", "where": "[Institution]" }
+    ],
+    "publications": [
+      { "title": "[Paper title]", "meta": "[Authors] — [Journal / Venue], [Year]" },
+      { "title": "[Paper title]", "meta": "[Authors] — [Journal / Venue], [Year]" },
+      { "title": "[Paper title]", "meta": "[Authors] — [Journal / Venue], [Year]" }
+    ],
+    "cvUrl": "#"
+  },
+  "writing": [
+    { "date": "[Month Year]", "title": "[Post title]", "summary": "[One or two sentences summarizing the post.]", "url": "#" },
+    { "date": "[Month Year]", "title": "[Post title]", "summary": "[Short summary.]", "url": "#" },
+    { "date": "[Month Year]", "title": "[Post title]", "summary": "[Short summary.]", "url": "#" }
+  ],
+  "footer": {
+    "note": "[Where you're based, what you're currently open to — collaboration, questions, coffee chats.]",
+    "links": [
+      { "label": "Email", "url": "mailto:you@example.com" },
+      { "label": "Scholar", "url": "#" },
+      { "label": "GitHub", "url": "#" },
+      { "label": "LinkedIn", "url": "#" }
+    ]
+  }
+}

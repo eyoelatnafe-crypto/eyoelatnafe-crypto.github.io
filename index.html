@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Your Name — Personal Site</title>
+<title>Personal Site</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <script>
   (function(){
@@ -16,7 +16,6 @@
 </script>
 <style>
   :root{
-    /* default = paper */
     --bg:#F1EFE8; --bg-grid:#E6E2D8; --surface:#FFFFFF; --surface-2:#EAE7DD;
     --ink:#1E2A2C; --ink-soft:#3A4547; --muted:#75705F; --line:#D8D3C4;
     --accent:#2F6F5E; --accent-soft:#E4EEE9; --accent-2:#B9862E; --accent-2-soft:#F3E9D4;
@@ -74,35 +73,19 @@
   .mono{ font-family:"IBM Plex Mono", ui-monospace, monospace; }
   .wrap{ max-width:920px; margin:0 auto; padding:0 28px; }
 
-  .nav{
-    position:sticky; top:0; z-index:20;
-    backdrop-filter:blur(8px);
-    background:color-mix(in srgb, var(--bg) 82%, transparent);
-    border-bottom:1px solid var(--line);
-  }
+  .nav{ position:sticky; top:0; z-index:20; backdrop-filter:blur(8px); background:color-mix(in srgb, var(--bg) 82%, transparent); border-bottom:1px solid var(--line); }
   .nav-inner{ display:flex; align-items:center; justify-content:space-between; height:60px; gap:16px; }
   .nav-brand{ font-family:"Fraunces",serif; font-weight:600; font-size:1.05rem; text-decoration:none; white-space:nowrap; }
   .nav-links{ display:flex; gap:22px; list-style:none; margin:0; padding:0; }
-  .nav-links a{
-    text-decoration:none; font-family:"IBM Plex Mono",monospace; font-size:.78rem;
-    letter-spacing:.06em; text-transform:uppercase; color:var(--muted);
-    padding:6px 0; border-bottom:1px solid transparent; transition:color .15s, border-color .15s;
-  }
+  .nav-links a{ text-decoration:none; font-family:"IBM Plex Mono",monospace; font-size:.78rem; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); padding:6px 0; border-bottom:1px solid transparent; transition:color .15s, border-color .15s; }
   .nav-links a:hover{ color:var(--ink); border-color:var(--accent); }
   .nav-right{ display:flex; align-items:center; gap:14px; }
 
-  /* theme switcher */
   .theme-switch{ display:flex; align-items:center; gap:8px; }
   .theme-switch .label{ font-family:"IBM Plex Mono",monospace; font-size:.68rem; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); }
   .theme-swatches{ display:flex; gap:6px; }
-  .swatch{
-    width:18px; height:18px; border-radius:50%; padding:0; cursor:pointer;
-    border:2px solid transparent; position:relative;
-    background: var(--swatch-bg); box-shadow: inset 0 0 0 1px var(--line);
-  }
-  .swatch::after{
-    content:""; position:absolute; inset:3px; border-radius:50%; background:var(--swatch-accent);
-  }
+  .swatch{ width:18px; height:18px; border-radius:50%; padding:0; cursor:pointer; border:2px solid transparent; position:relative; background:var(--swatch-bg); box-shadow:inset 0 0 0 1px var(--line); }
+  .swatch::after{ content:""; position:absolute; inset:3px; border-radius:50%; background:var(--swatch-accent); }
   .swatch[aria-pressed="true"]{ border-color:var(--ink); }
   .swatch[data-theme-option="paper"]{ --swatch-bg:#F1EFE8; --swatch-accent:#2F6F5E; }
   .swatch[data-theme-option="slate"]{ --swatch-bg:#14191A; --swatch-accent:#57B39B; }
@@ -123,12 +106,7 @@
   .hero-links a{ text-decoration:none; font-family:"IBM Plex Mono",monospace; font-size:.82rem; color:var(--ink-soft); border-bottom:1px solid var(--line); padding-bottom:2px; }
   .hero-links a:hover{ color:var(--accent); border-color:var(--accent); }
 
-  .card-photo{
-    aspect-ratio:4/5; border-radius:6px; overflow:hidden;
-    background:radial-gradient(120% 100% at 20% 0%, var(--accent-soft), transparent 55%), var(--surface-2);
-    border:1px solid var(--line); box-shadow:var(--shadow);
-    display:flex; align-items:flex-end; padding:18px; position:relative;
-  }
+  .card-photo{ aspect-ratio:4/5; border-radius:6px; overflow:hidden; background:radial-gradient(120% 100% at 20% 0%, var(--accent-soft), transparent 55%), var(--surface-2); border:1px solid var(--line); box-shadow:var(--shadow); display:flex; align-items:flex-end; padding:18px; position:relative; }
   .card-photo::before{ content:""; position:absolute; inset:0; background-image:repeating-linear-gradient(0deg, transparent, transparent 27px, var(--line) 28px); opacity:.35; }
   .card-photo .tag{ position:relative; font-family:"IBM Plex Mono",monospace; font-size:.72rem; color:var(--muted); background:var(--surface); border:1px solid var(--line); padding:5px 10px; border-radius:100px; }
 
@@ -178,6 +156,8 @@
   footer .links a{ font-family:"IBM Plex Mono",monospace; font-size:.8rem; text-decoration:none; color:var(--ink-soft); }
   footer .links a:hover{ color:var(--accent); }
 
+  .load-note{ font-family:"IBM Plex Mono",monospace; font-size:.8rem; color:var(--muted); padding:40px 0; text-align:center; }
+
   @media (max-width:760px){
     .hero-grid{ grid-template-columns:1fr; }
     .hero .card-photo{ max-width:220px; }
@@ -194,12 +174,13 @@
 
 <nav class="nav">
   <div class="wrap nav-inner">
-    <a class="nav-brand" href="#top">Your Name</a>
+    <a class="nav-brand" id="nav-brand" href="#top">Loading…</a>
     <ul class="nav-links">
       <li><a href="#research">Research</a></li>
       <li><a href="#academic">Academic</a></li>
       <li><a href="#writing">Writing</a></li>
       <li><a href="#contact">Contact</a></li>
+      <li><a href="./edit.html" title="Edit site content">Edit</a></li>
     </ul>
     <div class="nav-right">
       <div class="theme-switch">
@@ -220,16 +201,11 @@
 <section class="hero">
   <div class="wrap hero-grid">
     <div>
-      <p class="eyebrow">[Your Title — e.g. Doctoral Researcher, Field]</p>
-      <h1>Your Name</h1>
-      <p class="role">[One sentence: what you work on and why it matters — the pitch you'd give in an elevator.]</p>
-      <p class="bio">[A short paragraph: your affiliation, what you're currently researching or building, and one detail that makes you memorable — a past role, a habit, an angle. Two to four sentences is plenty.]</p>
-      <div class="hero-links">
-        <a href="mailto:you@example.com">you@example.com</a>
-        <a href="#">Google Scholar</a>
-        <a href="#">GitHub</a>
-        <a href="#">LinkedIn</a>
-      </div>
+      <p class="eyebrow" id="hero-eyebrow">&nbsp;</p>
+      <h1 id="hero-name">&nbsp;</h1>
+      <p class="role" id="hero-role">&nbsp;</p>
+      <p class="bio" id="hero-bio">&nbsp;</p>
+      <div class="hero-links" id="hero-links"></div>
     </div>
     <div class="card-photo">
       <span class="tag">fig. 1 — your photo here</span>
@@ -241,27 +217,8 @@
   <div class="wrap">
     <p class="eyebrow">Work</p>
     <h2 class="section-title">Research</h2>
-    <p class="section-sub">What you're building right now, newest first. Copy one block below to add the next project.</p>
-    <div class="stack">
-      <article class="research-item">
-        <div class="year mono">2026–</div>
-        <div>
-          <h3>[Project title]</h3>
-          <p>[One or two sentences on what the project does and why it's interesting — the question it answers, not just the method.]</p>
-          <div class="tags"><span class="pill">tag one</span><span class="pill alt">tag two</span><span class="pill">tag three</span></div>
-        </div>
-        <a class="go" href="#">Details →</a>
-      </article>
-      <article class="research-item">
-        <div class="year mono">2025</div>
-        <div>
-          <h3>[Project title]</h3>
-          <p>[Short description of this project.]</p>
-          <div class="tags"><span class="pill">tag one</span><span class="pill alt">tag two</span></div>
-        </div>
-        <a class="go" href="#">Details →</a>
-      </article>
-    </div>
+    <p class="section-sub">What I'm building right now, newest first.</p>
+    <div class="stack" id="research-list"></div>
   </div>
 </section>
 
@@ -269,24 +226,16 @@
   <div class="wrap">
     <p class="eyebrow">Academic Life</p>
     <h2 class="section-title">Academic</h2>
-    <p class="section-sub">Timeline, publications, and a current CV. Add a new list item as things happen.</p>
+    <p class="section-sub">Timeline, publications, and a current CV.</p>
     <div class="academic-grid">
       <div>
         <h3 style="font-size:1.05rem; margin-bottom:18px;">Timeline</h3>
-        <ul class="timeline">
-          <li><div class="when">[Year] — present</div><div class="what">[Degree / role]</div><div class="where">[Institution / lab]</div></li>
-          <li><div class="when">[Year] — [Year]</div><div class="what">[Prior role]</div><div class="where">[Organization]</div></li>
-          <li><div class="when">[Year]</div><div class="what">[Degree]</div><div class="where">[Institution]</div></li>
-        </ul>
-        <a class="cv-btn" href="#">↓ Download CV (PDF)</a>
+        <ul class="timeline" id="timeline-list"></ul>
+        <a class="cv-btn" id="cv-link" href="#">↓ Download CV (PDF)</a>
       </div>
       <div>
         <h3 style="font-size:1.05rem; margin-bottom:18px;">Selected publications</h3>
-        <ul class="pub-list">
-          <li><div class="pub-title">[Paper title]</div><div class="pub-meta">[Authors] — [Journal / Venue], [Year]</div></li>
-          <li><div class="pub-title">[Paper title]</div><div class="pub-meta">[Authors] — [Journal / Venue], [Year]</div></li>
-          <li><div class="pub-title">[Paper title]</div><div class="pub-meta">[Authors] — [Journal / Venue], [Year]</div></li>
-        </ul>
+        <ul class="pub-list" id="pub-list"></ul>
       </div>
     </div>
   </div>
@@ -296,39 +245,15 @@
   <div class="wrap">
     <p class="eyebrow">Personal Takes</p>
     <h2 class="section-title">Writing</h2>
-    <p class="section-sub">Shorter and less formal than the research. Copy a card to add a new post.</p>
-    <div class="posts">
-      <article class="post">
-        <span class="date mono">[Month Year]</span>
-        <h3>[Post title]</h3>
-        <p>[One or two sentences summarizing the post — enough to make someone want to click through.]</p>
-        <a class="read" href="#">Read →</a>
-      </article>
-      <article class="post">
-        <span class="date mono">[Month Year]</span>
-        <h3>[Post title]</h3>
-        <p>[Short summary.]</p>
-        <a class="read" href="#">Read →</a>
-      </article>
-      <article class="post">
-        <span class="date mono">[Month Year]</span>
-        <h3>[Post title]</h3>
-        <p>[Short summary.]</p>
-        <a class="read" href="#">Read →</a>
-      </article>
-    </div>
+    <p class="section-sub">Shorter and less formal than the research.</p>
+    <div class="posts" id="posts-list"></div>
   </div>
 </section>
 
 <footer id="contact">
   <div class="wrap footer-grid">
-    <p class="note">[Where you're based, what you're currently open to — collaboration, questions, coffee chats.]</p>
-    <div class="links">
-      <a href="mailto:you@example.com">Email</a>
-      <a href="#">Scholar</a>
-      <a href="#">GitHub</a>
-      <a href="#">LinkedIn</a>
-    </div>
+    <p class="note" id="footer-note">&nbsp;</p>
+    <div class="links" id="footer-links"></div>
   </div>
 </footer>
 
@@ -344,9 +269,7 @@
   (function(){
     var current = document.documentElement.getAttribute('data-theme') || 'paper';
     var buttons = document.querySelectorAll('.swatch');
-    function setActive(theme){
-      buttons.forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.themeOption === theme ? 'true' : 'false'); });
-    }
+    function setActive(theme){ buttons.forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.themeOption === theme ? 'true' : 'false'); }); }
     setActive(current);
     buttons.forEach(function(b){
       b.addEventListener('click', function(){
@@ -357,6 +280,61 @@
       });
     });
   })();
+
+  function escapeHtml(s){ var d=document.createElement('div'); d.textContent = s==null?'':String(s); return d.innerHTML; }
+  function escapeAttr(s){ return escapeHtml(s).replace(/"/g,'&quot;'); }
+
+  function renderSite(data){
+    document.title = data.meta.title;
+    document.getElementById('nav-brand').textContent = data.hero.name;
+    document.getElementById('hero-eyebrow').textContent = data.hero.eyebrow;
+    document.getElementById('hero-name').textContent = data.hero.name;
+    document.getElementById('hero-role').textContent = data.hero.role;
+    document.getElementById('hero-bio').textContent = data.hero.bio;
+
+    var linksHtml = '<a href="mailto:' + escapeAttr(data.hero.email) + '">' + escapeHtml(data.hero.email) + '</a>' +
+      data.hero.links.map(function(l){ return '<a href="' + escapeAttr(l.url) + '">' + escapeHtml(l.label) + '</a>'; }).join('');
+    document.getElementById('hero-links').innerHTML = linksHtml;
+
+    document.getElementById('research-list').innerHTML = data.research.map(function(item){
+      var tagsHtml = (item.tags || []).map(function(t, ti){ return '<span class="pill' + (ti % 2 ? ' alt' : '') + '">' + escapeHtml(t) + '</span>'; }).join('');
+      return '<article class="research-item">' +
+        '<div class="year mono">' + escapeHtml(item.year) + '</div>' +
+        '<div><h3>' + escapeHtml(item.title) + '</h3>' +
+        '<p>' + escapeHtml(item.description) + '</p>' +
+        '<div class="tags">' + tagsHtml + '</div></div>' +
+        '<a class="go" href="' + escapeAttr(item.link) + '">Details →</a>' +
+        '</article>';
+    }).join('');
+
+    document.getElementById('timeline-list').innerHTML = data.academic.timeline.map(function(t){
+      return '<li><div class="when">' + escapeHtml(t.when) + '</div><div class="what">' + escapeHtml(t.what) + '</div><div class="where">' + escapeHtml(t.where) + '</div></li>';
+    }).join('');
+    document.getElementById('cv-link').setAttribute('href', data.academic.cvUrl || '#');
+
+    document.getElementById('pub-list').innerHTML = data.academic.publications.map(function(p){
+      return '<li><div class="pub-title">' + escapeHtml(p.title) + '</div><div class="pub-meta">' + escapeHtml(p.meta) + '</div></li>';
+    }).join('');
+
+    document.getElementById('posts-list').innerHTML = data.writing.map(function(p){
+      return '<article class="post"><span class="date mono">' + escapeHtml(p.date) + '</span>' +
+        '<h3>' + escapeHtml(p.title) + '</h3><p>' + escapeHtml(p.summary) + '</p>' +
+        '<a class="read" href="' + escapeAttr(p.url) + '">Read →</a></article>';
+    }).join('');
+
+    document.getElementById('footer-note').textContent = data.footer.note;
+    document.getElementById('footer-links').innerHTML = data.footer.links.map(function(l){
+      return '<a href="' + escapeAttr(l.url) + '">' + escapeHtml(l.label) + '</a>';
+    }).join('');
+  }
+
+  fetch('./content.json', { cache: 'no-store' })
+    .then(function(r){ if(!r.ok) throw new Error('content.json not found'); return r.json(); })
+    .then(renderSite)
+    .catch(function(err){
+      document.getElementById('hero-name').textContent = 'Content failed to load';
+      document.getElementById('hero-bio').textContent = 'Could not load content.json (' + err.message + '). Make sure it sits next to index.html.';
+    });
 </script>
 
 </body>
